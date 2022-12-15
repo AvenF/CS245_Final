@@ -12,6 +12,8 @@ SOURCES += \
     adddialog.cpp \
     asset.cpp \
     assettablemodel.cpp \
+    category.cpp \
+    datamanager.cpp \
     main.cpp \
     mainwindow.cpp \
     updatedialog.cpp
@@ -20,6 +22,8 @@ HEADERS += \
     adddialog.h \
     asset.h \
     assettablemodel.h \
+    category.h \
+    datamanager.h \
     mainwindow.h \
     updatedialog.h
 
