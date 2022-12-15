@@ -13,36 +13,18 @@ DataManager::~DataManager()//destructor using the writeData function
     writeDataFile();
 }
 
-void DataManager::display()//display function meant to format the output
+
+void DataManager::add(Asset asset)//function meant to add assets to the map if not a duplicate
 {
-    // Print all items on the same line
-    cout << left << setw(15) << "Asset Tag" << " ";
-    cout << setw(25) << "Name" << " ";
-    cout << setw(18) << "Category" << " ";
-    cout << right << setw(10) << "Price" << " ";
-    cout << endl;
-
-    // Print on a new line
-    cout << string(70, '-') << endl;
-
-    for(auto& item : assets) //Displays asset data on a new line
-    {
-        item.second.display();
-        cout << '\n';
-    }
-}
-
-void DataManager::add(AssetItem asset)//function meant to add assets to the map if not a duplicate
-{
-        auto it = assets.find(asset.getAssetTag());
+        auto it = assets.find(asset.getID());
             if (it != assets.end())
             {
                 return;
             }
-        assets.insert(std::pair<int, AssetItem>(asset.getAssetTag(), asset));
+        assets.insert(std::pair<int, Asset>(asset.getID(), asset));
 }
 
-void DataManager::readDataFile()//This opens and reads the file
+void DataManager::readDataFile()//This loads data
 {
     ifstream input("Assign4.txt");
     if (!input)
@@ -60,17 +42,21 @@ void DataManager::readDataFile()//This opens and reads the file
         vector<string> fields = splitString(line, '\t');
 
         // if the row has 6 fields...
-        if (fields.size() == 4)
+        if (fields.size() == 5)
         {
+            //insert query
+            //add item
+            //remove
             // assign each token to a variable
             int assetTag = std::stoi(fields[0]);
             string name = fields[1];
             string category = fields[2];
             double price = std::stod(fields[3]);
+            string description = fields[4];
             // create an asset object
-            AssetItem a(assetTag, name, category, price);
+            Asset a(name, assetTag, price, category, description);
 
-            assets.insert(std::pair<int, AssetItem>(assetTag, a));
+            assets.insert(std::pair<int, Asset>(assetTag, a));
         }
     }
     input.close();
@@ -99,7 +85,7 @@ vector<string> DataManager::splitString(string text, char sep)//splitstring func
     return fields;
 }
 
-AssetItem DataManager::find(int assetTag) //This function finds an asset based on its tag
+Asset DataManager::find(int assetTag) //This function finds an asset based on its tag
 {
     auto it = assets.find(assetTag);
     if (it == assets.end())

@@ -1,5 +1,6 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
+#include "asset.h"
 #include<string>
 #include <vector>
 #include <iostream>
@@ -9,15 +10,15 @@
 #include <map>
 using std::vector;
 using std::string;
-typedef std::map< int, AssetItem > AssetMap;
+typedef std::map< int, Asset > AssetMap;
 
 class DataManager
 {
 private:
-    AssetMap assets; //map
+    AssetMap assets;
     vector<string> splitString(string, char);
     void writeDataFile();
-    void readDataFile();
+    void readDataFile(); //loadData
     string file;
 
 public:
@@ -26,8 +27,8 @@ public:
 
     //These are the functions meant to aid in the showing, adding, and finding of assets
     void display(); // all need parameters
-    void add(AssetItem);
-    AssetItem find(int assetTag);
+    void add(Asset);
+    Asset find(int assetTag);
 };
 
 #endif // DATAMANAGER_H
