@@ -11,12 +11,16 @@ CONFIG += c++17
 SOURCES += \
     asset.cpp \
     assettablemodel.cpp \
+    category.cpp \
+    datamanager.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     asset.h \
     assettablemodel.h \
+    category.h \
+    datamanager.h \
     mainwindow.h
 
 FORMS += \
