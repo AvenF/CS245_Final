@@ -9,18 +9,24 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    adddialog.cpp \
     asset.cpp \
     assettablemodel.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    updatedialog.cpp
 
 HEADERS += \
+    adddialog.h \
     asset.h \
     assettablemodel.h \
-    mainwindow.h
+    mainwindow.h \
+    updatedialog.h
 
 FORMS += \
-    mainwindow.ui
+    adddialog.ui \
+    mainwindow.ui \
+    updatedialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

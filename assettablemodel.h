@@ -23,6 +23,8 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     virtual bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
+    void removeAsset(int index);
+
 private:
     vector<Asset> assets;   // stores the asset objects
     void createAssets();    // helper function to create a few defualt assets

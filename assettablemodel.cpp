@@ -67,7 +67,7 @@ int AssetTableModel::columnCount(const QModelIndex &parent) const
 QVariant AssetTableModel::data(const QModelIndex &index, int role) const
 {
     // Get the row and column numbers from the given index (QModelIndex)
-    size_t row = static_cast<size_t>(index.row());
+    int row = index.row();
     int col = index.column();
 
     // Qt::DisplayRole -> what data do we display and in what columns?
@@ -87,7 +87,8 @@ QVariant AssetTableModel::data(const QModelIndex &index, int role) const
     }
 
     // Qt::FontRole -> manages the fonts and font styles used in the View
-    else if (role == Qt::FontRole) {
+    else if (role == Qt::FontRole)
+    {
         // Bold the text in the first column
         if (col == 0) {
             QFont boldFont;
@@ -97,17 +98,19 @@ QVariant AssetTableModel::data(const QModelIndex &index, int role) const
     }
 
     // Qt::ForegroundRole -> paints the foreground (text) colors
-    else if (role == Qt::ForegroundRole) {
-        // Paint the text red in the name column
+    else if (role == Qt::ForegroundRole)
+    {
+        // Paint the text red in the Password column
         if (col == 1) {
-            return QBrush(QColor(255,0,0));
+           return QBrush(QColor(255,0,0));
         }
     }
 
     // Qt::TextAlignRole -> controls how data is aligned inside cells
-    else if(role == Qt::TextAlignmentRole) {
-        // All columns after the Asset ID column should be right-aligned
-        // horizontally, and centered vertically
+    else if(role == Qt::TextAlignmentRole)
+    {
+        // All columns after the Username column should be right-aligned
+        // horizontally, and centered vertically.
         if (col > 0)
         {
             return int(Qt::AlignRight | Qt::AlignVCenter);
@@ -132,4 +135,23 @@ bool AssetTableModel::setData(QModelIndex const& idx, QVariant const & /*value*/
     }
 
     return false;
+}
+
+/*
+ * deletes the Asset at the given 0index from the user data
+ */
+void AssetTableModel::removeAsset(int index)
+{
+    // erases the Asset at position 'index' in the vector.
+    assets.erase(assets.begin() + index);
+
+    /*
+     * NOTE: vector::erase() uses an iterator as an argument.
+     * We grab the begin() iterator of 'users', then advance by
+     * 'index' number of elements to get to the User object
+     * we want to remove.
+     */
+
+    // VERY IMPORTANT - call setData to trigger the update of the model and view
+    this->setData(this->index(0,0), 0);
 }
