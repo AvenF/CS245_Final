@@ -9,19 +9,6 @@ using std::vector;
 CategoryTableModel::CategoryTableModel(vector<Category> categories, QObject *parent)
     : QAbstractTableModel(parent), categories(categories)
 {
-    //this->createCategories();
-}
-
-void CategoryTableModel::createCategories() {
-    // Create 3 Category objects
-    Category category1(1, "CPU");
-    Category category2(2, "PSU");
-    Category category3(3, "Mic");
-
-    // Add them to the categories vector
-    categories.push_back(category1);
-    categories.push_back(category2);
-    categories.push_back(category3);
 }
 
 QVariant CategoryTableModel::headerData(int section, Qt::Orientation orientation, int role) const

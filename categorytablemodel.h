@@ -31,7 +31,6 @@ public:
 
 private:
     vector<Category> categories;   // stores the category objects
-    void createCategories();    // helper function to create a few defualt categories
 
 signals:
 

@@ -12,18 +12,6 @@ AssetTableModel::AssetTableModel(vector<Asset> assets, QObject *parent)
     //this->createAssets();
 }
 
-/*void AssetTableModel::createAssets() {
-    // Create 3 asset objects
-    Asset asset1("11th gen intel processor", 1, 209.99, "CPU", "");
-    Asset asset2("500 watt samsung power supply", 2, 79.99, "PSU", "Gold-rated, refurbished");
-    Asset asset3("Hyperx Quadcast S", 3, 129.99, "Mic", "");
-
-    // Add them to the assets vector
-    assets.push_back(asset1);
-    assets.push_back(asset2);
-    assets.push_back(asset3);
-}*/
-
 QVariant AssetTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole) {
@@ -163,36 +151,6 @@ void AssetTableModel::addAsset(string name, double cost, string cat, string desc
 
     // VERY IMPORTANT - call setData to trigger the update of the model and view
     this->setData(this->index(0,0), 0);
-}
-
-void AssetTableModel::updateAsset(string &name, double &cost, string &cat, string &desc, const int &id) {
-    for (Asset &a : assets) {
-        if (a.getID() == id) {
-            a.setName(name);
-            a.setCost(cost);
-            a.setCategory(cat);
-
-            if (!desc.empty()) {
-                a.setDescription(desc);
-            }
-        }
-    }
-
-    // VERY IMPORTANT - call setData to trigger the update of the model and view
-    this->setData(this->index(0,0), 0);
-}
-
-void AssetTableModel::searchAsset(string s) {
-    vector<Asset> tempAssets;
-
-    for (Asset a : assets) {
-        if (a.getName().find(s) != string::npos || a.getDescription().find(s) != string::npos) {
-            tempAssets.push_back(a);
-        }
-    }
-
-    setModelData(tempAssets);
-
 }
 
 void AssetTableModel::setModelData(vector<Asset> updatedAssets) {
