@@ -2,6 +2,7 @@
 #include "adddialog.h"
 #include "updatedialog.h"
 #include "ui_mainwindow.h"
+#include "datamanager.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -133,6 +134,9 @@ void MainWindow::on_removeCategoryButton_clicked()
 }
 
 void MainWindow::openAddDialog() {
+    DataManager dm;
+    dm.loadData();
+
     AddDialog ad(categoryModel->getCategories(), this);
     ad.setModal(true);
 
