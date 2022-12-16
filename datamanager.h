@@ -18,15 +18,19 @@ class DataManager
 private:
     AssetMap assets;
     vector<string> splitString(string, char);
-    void writeDataFile();
     void readDataFile(); //loadData
     string file;
     QSqlDatabase db;
-    void _loadData();
+    void insertData();
+    bool updateData(const string name, double cost, const string category,
+                    const string description);
+    void removeData();
 
 public:
-    DataManager(string);
+    DataManager(); // should pass connection string to datamanager!!!!!!
     ~DataManager();
+    void loadData(); // should be underscored AND PRIVATE!!!!!!!!!!!!!!!!!!!!!
+
 
     //These are the functions meant to aid in the showing, adding, and finding of assets
     void display(); // all need parameters

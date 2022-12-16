@@ -4,26 +4,88 @@
 #include <QtSql/QSqlRecord>
 #include <QString>
 #include <QVariant>
+#include <QMessageBox>
+#include <string>
 using namespace std;
+using std::string;
 using std::cout;
 
+DataManager::DataManager() {
 
-void DataManager::_loadData()
+}
+void DataManager::loadData() // DONT FORGET TO CHANGE DONOVAN
 {
     db = QSqlDatabase::addDatabase("QODBC");
-    db.setDatabaseName("Driver={ODBC Driver 13 for SQL Server};Server=tcp:assetitem-dw.database.windows.net,1433;Database=assetitem;Uid=jpgrady;Pwd={your_password_here};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;");
+    db.setDatabaseName("Driver={ODBC Driver 13 for SQL Server};Server=tcp:assetitem-dw.database.windows.net,1433;Database=assetitem;Uid=jpgrady;Pwd=cs245C++;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;");
+    bool ok = db.open();
+           // if we connect successfully...
+           if(ok)
+           {
 
+           }
+           else
+           {
+                 exit(1);
+           }
 }
 
-DataManager::DataManager(string file)
+void DataManager::insertData()
 {
-    this->file = file;
-    readDataFile();
+   QString sql;
+   sql += "INSERT INTO assetItems (categoryID, Cost, Name, Description)";
 }
+
+bool DataManager::updateData(const string name, double cost, const string category,
+                             const string description)
+{
+    /**
+    AssetMap assets = assets;
+    assets;
+    theCust.setHomeTown(city);
+    theCust.setHomeState(state);
+    **/
+
+    bool ok = db.open();
+    if(ok)
+    {
+    QString sql;
+    sql += "UPDATE asset ";
+    sql += "SET name = ?, cost = ?, category = ?, description = ? ";
+    sql += "WHERE ID = ?";
+
+    QSqlQuery query;
+    query.setForwardOnly(true);
+    query.prepare(sql);
+
+    query.bindValue(0, QString::fromStdString(name));
+    query.bindValue(1, QString::number(cost));
+    query.bindValue(2, QString::fromStdString(category));
+    query.bindValue(3, QString::fromStdString(description));
+    if(query.exec())
+    {
+      return true;
+    }
+    else
+    {
+    return false;
+    }
+    return false;
+    }
+}
+
+/**
+void removeData()
+{
+    QSqlQuery query;
+    query.prepare("DELETE FROM asset WHERE ID = ?");
+    query.exec();
+
+}
+**/
 
 DataManager::~DataManager()//destructor using the writeData function
 {
-    writeDataFile();
+
 }
 
 
@@ -57,7 +119,6 @@ void DataManager::readDataFile()//This loads data
         // if the row has 6 fields...
         if (fields.size() == 5)
         {
-            //insert query
             //add item
             //remove
             // assign each token to a variable
@@ -73,11 +134,6 @@ void DataManager::readDataFile()//This loads data
         }
     }
     input.close();
-}
-
-void DataManager::writeDataFile()//sends data back to file
-{
-    ofstream input("Assign4.txt");
 }
 
 vector<string> DataManager::splitString(string text, char sep)//splitstring function meant to seperate data
