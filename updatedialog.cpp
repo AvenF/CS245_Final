@@ -3,11 +3,15 @@
 #include <QMessageBox>
 #include <string>
 
-UpdateDialog::UpdateDialog(QWidget *parent) :
+UpdateDialog::UpdateDialog(vector<Category> categories, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UpdateDialog)
 {
     ui->setupUi(this);
+
+    for ( Category c : categories ) {
+        ui->assetCategoryCombo->addItem(QString::fromStdString(c.getCategoryName()));
+    }
 }
 
 UpdateDialog::~UpdateDialog()

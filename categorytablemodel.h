@@ -1,20 +1,20 @@
-#ifndef ASSETTABLEMODEL_H
-#define ASSETTABLEMODEL_H
+#ifndef CATEGORYTABLEMODEL_H
+#define CATEGORYTABLEMODEL_H
 
 #include <QAbstractTableModel>
 #include <vector>
 #include <string>
-#include "asset.h"
+#include "category.h"
 
 using std::string;
 using std::vector;
 
-class AssetTableModel : public QAbstractTableModel
+class CategoryTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    explicit AssetTableModel(QObject *parent = 0);
+    explicit CategoryTableModel(QObject *parent = 0);
 
     // Overrides methods inherited from QAbstractTableModel
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -23,12 +23,13 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     virtual bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
-    void removeAsset(int index);
-    void addAsset(string name, double cost, string cat, string desc);
+    void removeCategory(int index);
+    vector<Category> getCategories();
+    void addCategory(int i, string s);
 
 private:
-    vector<Asset> assets;   // stores the asset objects
-    void createAssets();    // helper function to create a few defualt assets
+    vector<Category> categories;   // stores the category objects
+    void createCategories();    // helper function to create a few defualt categories
 
 signals:
 
@@ -36,4 +37,4 @@ public slots:
 
 };
 
-#endif // ASSETTABLEMODEL_H
+#endif // CATEGORYTABLEMODEL_H

@@ -6,6 +6,7 @@
 using StandardButton = QMessageBox::StandardButton;
 #include <QItemSelection>
 #include "assettablemodel.h"
+#include "categorytablemodel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,9 +25,7 @@ private slots:
 
     void on_assetTable_pressed(const QModelIndex &index);
 
-    void on_removeButton_clicked();
-
-    void on_actionRemove_triggered();
+    void on_removeAssetButton_clicked();
 
     void on_addButton_clicked();
 
@@ -36,8 +35,15 @@ private slots:
 
     void on_actionUpdate_triggered();
 
+    void on_categoryTable_pressed(const QModelIndex &index);
+
+    void on_removeCategoryButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     AssetTableModel *assetModel;
+    CategoryTableModel *categoryModel;
+    void openAddDialog();
+    void openUpdateDialog();
 };
 #endif // MAINWINDOW_H
