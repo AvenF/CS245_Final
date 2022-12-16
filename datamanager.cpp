@@ -113,59 +113,6 @@ void DataManager::_loadAssetData() {
         }
 }
 
-void DataManager::insertData()
-{
-   QString sql;
-   sql += "INSERT INTO assetItems (categoryID, Cost, Name, Description)";
-}
-
-bool DataManager::updateData(const string name, double cost, const string category,
-                             const string description)
-{
-    /**
-    AssetMap assets = assets;
-    assets;
-    theCust.setHomeTown(city);
-    theCust.setHomeState(state);
-    **/
-
-    bool ok = db.open();
-    if(ok)
-    {
-    QString sql;
-    sql += "UPDATE asset ";
-    sql += "SET name = ?, cost = ?, category = ?, description = ? ";
-    sql += "WHERE ID = ?";
-
-    QSqlQuery query;
-    query.setForwardOnly(true);
-    query.prepare(sql);
-
-    query.bindValue(0, QString::fromStdString(name));
-    query.bindValue(1, QString::number(cost));
-    query.bindValue(2, QString::fromStdString(category));
-    query.bindValue(3, QString::fromStdString(description));
-        if(query.exec())
-        {
-          return true;
-        }
-        else
-        {
-        return false;
-        }
-    }
-}
-
-/**
-void removeData()
-{
-    QSqlQuery query;
-    query.prepare("DELETE FROM asset WHERE ID = ?");
-    query.exec();
-
-}
-**/
-
 DataManager::~DataManager()//destructor using the writeData function
 {
 

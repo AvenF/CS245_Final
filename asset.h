@@ -9,6 +9,7 @@ class Asset
 public:
     Asset();
     Asset(string, int, double, string, string);
+
     string getName() const;
     int getID() const;
     double getCost() const;

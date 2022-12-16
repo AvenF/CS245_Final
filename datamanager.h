@@ -20,14 +20,10 @@ private:
     vector<Asset> assets;
     vector<Category> categories;
     QString connection;
+    QSqlDatabase db;
+
     vector<string> splitString(string, char);
     void readDataFile(); //loadData
-    string file;
-    QSqlDatabase db;
-    void insertData();
-    bool updateData(const string name, double cost, const string category,
-                    const string description);
-    void removeData();
 
     void _loadCategoryData();
     void _loadAssetData();
@@ -37,9 +33,6 @@ public:
     ~DataManager();
 
     //These are the functions meant to aid in the showing, adding, and finding of assets
-    void display(); // all need parameters
-    void add(Asset);
-    Asset find(int assetTag);
 
     // Database manipulation functions
     void addCategoryToDB(string c);
