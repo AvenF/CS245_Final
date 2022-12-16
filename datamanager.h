@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <fstream>
 #include <map>
+#include <QtSql/QSqlDatabase>
 using std::vector;
 using std::string;
 typedef std::map< int, Asset > AssetMap;
@@ -20,6 +21,8 @@ private:
     void writeDataFile();
     void readDataFile(); //loadData
     string file;
+    QSqlDatabase db;
+    void _loadData();
 
 public:
     DataManager(string);

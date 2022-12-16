@@ -1,6 +1,19 @@
 #include "datamanager.h"
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlRecord>
+#include <QString>
+#include <QVariant>
 using namespace std;
 using std::cout;
+
+
+void DataManager::_loadData()
+{
+    db = QSqlDatabase::addDatabase("QODBC");
+    db.setDatabaseName("Driver={ODBC Driver 13 for SQL Server};Server=tcp:assetitem-dw.database.windows.net,1433;Database=assetitem;Uid=jpgrady;Pwd={your_password_here};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;");
+
+}
 
 DataManager::DataManager(string file)
 {
