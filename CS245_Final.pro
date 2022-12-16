@@ -15,6 +15,7 @@ SOURCES += \
     category.cpp \
     categorytablemodel.cpp \
     datamanager.cpp \
+    logindialog.cpp \
     main.cpp \
     mainwindow.cpp \
     updatedialog.cpp
@@ -26,11 +27,13 @@ HEADERS += \
     category.h \
     categorytablemodel.h \
     datamanager.h \
+    logindialog.h \
     mainwindow.h \
     updatedialog.h
 
 FORMS += \
     adddialog.ui \
+    logindialog.ui \
     mainwindow.ui \
     updatedialog.ui
 

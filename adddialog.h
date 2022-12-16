@@ -32,8 +32,6 @@ private slots:
 
 private:
     Ui::AddDialog *ui;
-    CategoryTableModel *cModel;
-    bool is_number(const std::string& s);
     double cost;
 };
 

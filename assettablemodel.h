@@ -25,10 +25,13 @@ public:
 
     void removeAsset(int index);
     void addAsset(string name, double cost, string cat, string desc);
+    void updateAsset(string &name, double &cost, string &cat, string &desc, const int &id);
+    void searchAsset(string s);
 
 private:
     vector<Asset> assets;   // stores the asset objects
     void createAssets();    // helper function to create a few defualt assets
+    void setModelData(vector<Asset> updatedAssets);
 
 signals:
 

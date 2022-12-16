@@ -15,12 +15,18 @@ public:
     string getCategory() const;
     string getDescription() const;
 
+    void setName(string n);
+    void setCost(double c);
+    void setCategory(string c);
+    void setDescription(string d);
+
 private:
     string name;
     int id;
     double cost;
     string category;
     string description;
+
 };
 
 #endif // ASSET_H

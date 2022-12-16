@@ -14,9 +14,9 @@ AssetTableModel::AssetTableModel(QObject *parent)
 
 void AssetTableModel::createAssets() {
     // Create 3 asset objects
-    Asset asset1("11th gen intel processor", 001, 209.99, "CPU", "");
-    Asset asset2("500 watt samsung power supply", 002, 79.99, "PSU", "Gold-rated, refurbished");
-    Asset asset3("Hyperx Quadcast S", 003, 129.99, "Mic", "");
+    Asset asset1("11th gen intel processor", 1, 209.99, "CPU", "");
+    Asset asset2("500 watt samsung power supply", 2, 79.99, "PSU", "Gold-rated, refurbished");
+    Asset asset3("Hyperx Quadcast S", 3, 129.99, "Mic", "");
 
     // Add them to the assets vector
     assets.push_back(asset1);
@@ -120,6 +120,7 @@ QVariant AssetTableModel::data(const QModelIndex &index, int role) const
 }
 
 bool AssetTableModel::setData(QModelIndex const& idx, QVariant const & /*value*/, int role) {
+
     // Qt::EditRole: manages changes in the model
     if (Qt::EditRole == role) {
         // Get the top left and bottom right indices of the cells in our update range
@@ -161,5 +162,47 @@ void AssetTableModel::addAsset(string name, double cost, string cat, string desc
     assets.push_back(a);
 
     // VERY IMPORTANT - call setData to trigger the update of the model and view
+    this->setData(this->index(0,0), 0);
+}
+
+void AssetTableModel::updateAsset(string &name, double &cost, string &cat, string &desc, const int &id) {
+    for (Asset &a : assets) {
+        if (a.getID() == id) {
+            a.setName(name);
+            a.setCost(cost);
+            a.setCategory(cat);
+
+            if (!desc.empty()) {
+                a.setDescription(desc);
+            }
+        }
+    }
+
+    // VERY IMPORTANT - call setData to trigger the update of the model and view
+    this->setData(this->index(0,0), 0);
+}
+
+void AssetTableModel::searchAsset(string s) {
+    vector<Asset> tempAssets;
+
+    for (Asset a : assets) {
+        if (a.getName().find(s) != string::npos || a.getDescription().find(s) != string::npos) {
+            tempAssets.push_back(a);
+        }
+    }
+
+    setModelData(tempAssets);
+
+}
+
+void AssetTableModel::setModelData(vector<Asset> updatedAssets) {
+
+    // clear out old vector items
+    this->assets.clear();
+
+    // if vector is not empty, copy new vector to 'assets'
+    this->assets = updatedAssets;
+
+    // refresh all the view's data
     this->setData(this->index(0,0), 0);
 }

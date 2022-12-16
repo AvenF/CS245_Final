@@ -39,6 +39,8 @@ private slots:
 
     void on_removeCategoryButton_clicked();
 
+    void on_searchBar_returnPressed();
+
 private:
     Ui::MainWindow *ui;
     AssetTableModel *assetModel;

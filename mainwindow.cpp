@@ -154,11 +154,30 @@ void MainWindow::openAddDialog() {
 }
 
 void MainWindow::openUpdateDialog() {
-    UpdateDialog ud(categoryModel->getCategories(), this);
+
+    // what Asset will we update?  check the assetTable's selection!
+    QModelIndex index = ui->assetTable->selectionModel()->currentIndex();
+    int row = index.row();
+    vector<Category> categories = categoryModel->getCategories();
+
+    UpdateDialog ud(categories, index, this);
     ud.setModal(true);
 
     ud.show();
     if(ud.exec( )== QDialog::Accepted) {
+        string aName = ud.getAssetName();
+        double aCost = ud.getAssetCost();
+        string aCat = ud.getAssetCategory();
+        string aDesc = ud.getAssetDescription();
 
+        int id = index.sibling(row,0).data().toInt();
+        assetModel->updateAsset(aName, aCost, aCat, aDesc, id);
     }
+
 }
+
+void MainWindow::on_searchBar_returnPressed()
+{
+    assetModel->searchAsset(ui->searchBar->text().toStdString());
+}
+

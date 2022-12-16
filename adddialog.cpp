@@ -78,20 +78,8 @@ void AddDialog::on_addAsset_clicked()
 
     this->cost = cost;
 
-    /*QString qStr = ui->assetCostBox->text();
-    bool doub = true;
-    for (char c : qStr.toStdString()) {
-
-    }
-    else {
-        QMessageBox::warning(
-                    this,
-                    tr("Alert"),
-                    tr("Sorry, but the 'cost' field input must be numeric.")    );
-    }*/
-
     // exception the description, if all fields have values, we are good...
-    if(!name.isEmpty() && !category.isEmpty()) {
+    if(!name.isEmpty()) {
         // add category to list of categories and close
         accept();
     }

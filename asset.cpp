@@ -31,3 +31,19 @@ string Asset::getCategory() const {
 string Asset::getDescription() const {
     return description;
 }
+
+void Asset::setName(string n) {
+    name = n;
+}
+
+void Asset::setCost(double c) {
+    cost = c;
+}
+
+void Asset::setCategory(string c) {
+    category = c;
+}
+
+void Asset::setDescription(string d) {
+    description = d;
+}
