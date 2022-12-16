@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/CS245_Final">
+        <file>Assets connection.txt</file>
+    </qresource>
+</RCC>

@@ -58,6 +58,10 @@ string AddDialog::getAssetDescription() {
     return ui->assetDescriptionText->toPlainText().toStdString();
 }
 
+unsigned AddDialog::getAssetID() {
+    return ui->assetIDBox->text().toUInt();
+}
+
 string AddDialog::getCategoryName() {
     return ui->categoryNameBox->text().toStdString();
 }
@@ -68,6 +72,7 @@ void AddDialog::on_addAsset_clicked()
     QString name = ui->assetNameBox->text();
     QString category = ui->assetCategoryCombo->currentText();
     QString description = ui->assetDescriptionText->toPlainText();
+    QString id = ui->assetIDBox->text();
     double cost;
 
     ui->assetCostBox->setValidator(new QDoubleValidator(this));

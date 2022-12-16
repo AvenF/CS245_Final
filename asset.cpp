@@ -2,6 +2,11 @@
 
 Asset::Asset()
 {
+    this->id = 0;
+    this->category = "";
+    this->cost = 0.0;
+    this->name = "";
+    this->description = "";
 }
 
 Asset::Asset(string name, int id, double cost, string cat, string desc) {
@@ -40,10 +45,14 @@ void Asset::setCost(double c) {
     cost = c;
 }
 
-void Asset::setCategory(string c) {
-    category = c;
+void Asset::setCategory(string s) {
+    category = s;
 }
 
 void Asset::setDescription(string d) {
     description = d;
+}
+
+void Asset::setID(int i) {
+    id = i;
 }

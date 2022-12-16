@@ -15,9 +15,10 @@ public:
     string getCategory() const;
     string getDescription() const;
 
+    void setID(int i);
     void setName(string n);
     void setCost(double c);
-    void setCategory(string c);
+    void setCategory(string s);
     void setDescription(string d);
 
 private:

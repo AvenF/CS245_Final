@@ -23,6 +23,7 @@ public:
     double getAssetCost();
     string getAssetCategory();
     string getAssetDescription();
+    unsigned getAssetID();
     string getCategoryName();
 
 private slots:

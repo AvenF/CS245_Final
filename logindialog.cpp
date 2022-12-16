@@ -34,7 +34,7 @@ void LoginDialog::on_buttonBox_accepted()
         QMessageBox::warning(
                     this,
                     tr("Alert"),
-                    tr("Sorry, but your username and password do not match. Username = jpgrady | Password = cs245") );
+                    tr("Sorry, but your username and password do not match. Username = jpgrady | Password = cs245C++") );
         reject();
     }
 

@@ -2,6 +2,9 @@
 #include "adddialog.h"
 #include "updatedialog.h"
 #include "ui_mainwindow.h"
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlRecord>
 #include "datamanager.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -11,10 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     // Create new asset / category models & apply them to the table view
-    assetModel = new AssetTableModel(this);
+    assetModel = new AssetTableModel(dm.getAssets(), this);
     ui->assetTable->setModel(assetModel);
 
-    categoryModel = new CategoryTableModel(this);
+    categoryModel = new CategoryTableModel(dm.getCategories(), this);
     ui->categoryTable->setModel(categoryModel);
 
     // Set the table view to allow the columns to expand
@@ -70,11 +73,14 @@ void MainWindow::on_removeAssetButton_clicked()
     // if yes, remove the asset
     if (reply == QMessageBox::Yes)
     {
+        this->dm.removeAssetFromDB(index.sibling(row,0).data().toInt());
+
         // tell the AssetTableModel to delete the Asset at index 'row'
         assetModel->removeAsset(row);
 
         // clear any selections in the assetTable
         ui->assetTable->selectionModel()->clearSelection();
+
     }
 }
 
@@ -119,23 +125,24 @@ void MainWindow::on_removeCategoryButton_clicked()
     // verify that the end user wants to delete the selected Asset;
     // displays a standard Yes|No QMessageBox
     StandardButton reply;
-    reply = QMessageBox::question(this, "Remove Category", "Are you sure you want to remove this category from the database?",
+    reply = QMessageBox::question(this, "Remove Category", "Are you sure you want to remove this category from the database? All assets within the category will be deleted!",
                                   QMessageBox::Yes|QMessageBox::No);
 
     // if yes, remove the asset
     if (reply == QMessageBox::Yes)
     {
+        this->dm.removeCategoryFromDB(index.sibling(row,0).data().toString().toStdString());
         // tell the AssetTableModel to delete the Asset at index 'row'
         categoryModel->removeCategory(row);
 
         // clear any selections in the assetTable
         ui->categoryTable->selectionModel()->clearSelection();
+
+        this->assetModel->setModelData(this->dm.getAssets());
     }
 }
 
 void MainWindow::openAddDialog() {
-    DataManager dm;
-    dm.loadData();
 
     AddDialog ad(categoryModel->getCategories(), this);
     ad.setModal(true);
@@ -145,14 +152,17 @@ void MainWindow::openAddDialog() {
     if(ad.exec( )== QDialog::Accepted) {
         if (!ad.getCategoryName().empty()) {
             string cName = ad.getCategoryName();
-            categoryModel->addCategory(4, cName);
+            this->dm.addCategoryToDB(cName);
+            categoryModel->setModelData(this->dm.getCategories());
         }
         else {
             string aName = ad.getAssetName();
             double aCost = ad.getAssetCost();
             string aCat = ad.getAssetCategory();
             string aDesc = ad.getAssetDescription();
-            assetModel->addAsset(aName, aCost, aCat, aDesc);
+            unsigned id = ad.getAssetID();
+            this->dm.addAssetToDB(aName, aCost, aCat, aDesc, id);
+            assetModel->setModelData(this->dm.getAssets());
         }
     }
 }
@@ -162,7 +172,7 @@ void MainWindow::openUpdateDialog() {
     // what Asset will we update?  check the assetTable's selection!
     QModelIndex index = ui->assetTable->selectionModel()->currentIndex();
     int row = index.row();
-    vector<Category> categories = categoryModel->getCategories();
+    vector<Category> categories = this->dm.getCategories();
 
     UpdateDialog ud(categories, index, this);
     ud.setModal(true);
@@ -175,13 +185,15 @@ void MainWindow::openUpdateDialog() {
         string aDesc = ud.getAssetDescription();
 
         int id = index.sibling(row,0).data().toInt();
-        assetModel->updateAsset(aName, aCost, aCat, aDesc, id);
+        this->dm.updateAssetInDB(aName, aCost, aCat, aDesc, id);
+        this->assetModel->setModelData(this->dm.getAssets());
     }
 
 }
 
 void MainWindow::on_searchBar_returnPressed()
 {
-    assetModel->searchAsset(ui->searchBar->text().toStdString());
+    this->dm.searchAssets(ui->searchBar->text().toStdString());
+    this->assetModel->setModelData(this->dm.getAssets());
 }
 

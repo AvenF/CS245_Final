@@ -10,15 +10,15 @@ private:
     string categoryName;
     int lastSetID;          // Will help keep track of SQL's auto increment id field
 
-    void setCategoryName(string categoryName);
-    void setCategoryID(int categoryID);
-
 public:
     Category();
     Category(int, string);
 
     int getCategoryID() const { return categoryID; }
     string getCategoryName() const { return categoryName; }
+
+    void setCategoryName(string categoryName);
+    void setCategoryID(int categoryID);
 };
 
 #endif // CATEGORY_H

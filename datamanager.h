@@ -1,6 +1,7 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 #include "asset.h"
+#include "category.h"
 #include<string>
 #include <vector>
 #include <iostream>
@@ -16,7 +17,9 @@ typedef std::map< int, Asset > AssetMap;
 class DataManager
 {
 private:
-    AssetMap assets;
+    vector<Asset> assets;
+    vector<Category> categories;
+    QString connection;
     vector<string> splitString(string, char);
     void readDataFile(); //loadData
     string file;
@@ -26,16 +29,28 @@ private:
                     const string description);
     void removeData();
 
+    void _loadCategoryData();
+    void _loadAssetData();
+
 public:
     DataManager(); // should pass connection string to datamanager!!!!!!
     ~DataManager();
-    void loadData(); // should be underscored AND PRIVATE!!!!!!!!!!!!!!!!!!!!!
-
 
     //These are the functions meant to aid in the showing, adding, and finding of assets
     void display(); // all need parameters
     void add(Asset);
     Asset find(int assetTag);
+
+    // Database manipulation functions
+    void addCategoryToDB(string c);
+    void addAssetToDB(string name, double cost, string cat, string desc, int id);
+    void removeCategoryFromDB(string c);
+    void removeAssetFromDB(int id);
+    void updateAssetInDB(string name, double cost, string cat, string desc, int id);
+    void searchAssets(string s);
+
+    vector<Asset> getAssets();
+    vector<Category> getCategories();
 };
 
 #endif // DATAMANAGER_H

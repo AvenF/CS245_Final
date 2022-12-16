@@ -5,8 +5,12 @@
 #include <QMessageBox>
 using StandardButton = QMessageBox::StandardButton;
 #include <QItemSelection>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlRecord>
 #include "assettablemodel.h"
 #include "categorytablemodel.h"
+#include "datamanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -45,6 +49,7 @@ private:
     Ui::MainWindow *ui;
     AssetTableModel *assetModel;
     CategoryTableModel *categoryModel;
+    DataManager dm;
     void openAddDialog();
     void openUpdateDialog();
 };

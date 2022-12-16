@@ -6,13 +6,13 @@
 
 using std::vector;
 
-AssetTableModel::AssetTableModel(QObject *parent)
-    : QAbstractTableModel(parent)
+AssetTableModel::AssetTableModel(vector<Asset> assets, QObject *parent)
+    : QAbstractTableModel(parent), assets(assets)
 {
-    this->createAssets();
+    //this->createAssets();
 }
 
-void AssetTableModel::createAssets() {
+/*void AssetTableModel::createAssets() {
     // Create 3 asset objects
     Asset asset1("11th gen intel processor", 1, 209.99, "CPU", "");
     Asset asset2("500 watt samsung power supply", 2, 79.99, "PSU", "Gold-rated, refurbished");
@@ -22,7 +22,7 @@ void AssetTableModel::createAssets() {
     assets.push_back(asset1);
     assets.push_back(asset2);
     assets.push_back(asset3);
-}
+}*/
 
 QVariant AssetTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
@@ -157,8 +157,8 @@ void AssetTableModel::removeAsset(int index)
     this->setData(this->index(0,0), 0);
 }
 
-void AssetTableModel::addAsset(string name, double cost, string cat, string desc) {
-    Asset a(name, 4, cost, cat, desc);
+void AssetTableModel::addAsset(string name, double cost, string cat, string desc, unsigned u) {
+    Asset a(name, u, cost, cat, desc);
     assets.push_back(a);
 
     // VERY IMPORTANT - call setData to trigger the update of the model and view

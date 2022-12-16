@@ -6,10 +6,10 @@
 
 using std::vector;
 
-CategoryTableModel::CategoryTableModel(QObject *parent)
-    : QAbstractTableModel(parent)
+CategoryTableModel::CategoryTableModel(vector<Category> categories, QObject *parent)
+    : QAbstractTableModel(parent), categories(categories)
 {
-    this->createCategories();
+    //this->createCategories();
 }
 
 void CategoryTableModel::createCategories() {
@@ -150,5 +150,17 @@ void CategoryTableModel::addCategory(int i, string s) {
     categories.push_back(c);
 
     // VERY IMPORTANT - call setData to trigger the update of the model and view
+    this->setData(this->index(0,0), 0);
+}
+
+void CategoryTableModel::setModelData(vector<Category> updatedCategories) {
+
+    // clear out old vector items
+    this->categories.clear();
+
+    // if vector is not empty, copy new vector to 'assets'
+    this->categories = updatedCategories;
+
+    // refresh all the view's data
     this->setData(this->index(0,0), 0);
 }

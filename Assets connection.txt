@@ -1,0 +1,1 @@
+DRIVER={SQL Server};Server=assetitem-dw.database.windows.net;Database=Assets;Uid=jpgrady;Port=1433;Pwd=cs245C++;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
