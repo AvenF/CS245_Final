@@ -14,16 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QListView" name="categoryList">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>151</width>
-      <height>521</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="categoryLabel">
     <property name="geometry">
      <rect>
@@ -93,7 +83,7 @@
      <string>Update</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="removeButton">
+   <widget class="QPushButton" name="removeAssetButton">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -106,7 +96,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Remove</string>
+     <string>Remove Asset</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="searchBar">
@@ -146,6 +136,32 @@
      <string>Add</string>
     </property>
    </widget>
+   <widget class="QTableView" name="categoryTable">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>31</y>
+      <width>151</width>
+      <height>521</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="removeCategoryButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>50</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Remove Category</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -170,7 +186,6 @@
     <addaction name="separator"/>
     <addaction name="actionAdd"/>
     <addaction name="actionUpdate"/>
-    <addaction name="actionRemove"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuOptions"/>

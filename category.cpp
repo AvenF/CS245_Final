@@ -10,7 +10,7 @@ Category::Category()
 Category::Category(int categoryID, string categoryName) : categoryID(categoryID),
     categoryName(categoryName)
 {
-
+    lastSetID = -1;
 }
 
 void Category::setCategoryID(int categoryID)

@@ -1,70 +1,62 @@
-#include "assettablemodel.h"
+#include "categorytablemodel.h"
 #include <QColor>
 #include <QFont>
-#include "asset.h"
+#include "category.h"
 #include "qbrush.h"
 
 using std::vector;
 
-AssetTableModel::AssetTableModel(QObject *parent)
+CategoryTableModel::CategoryTableModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
-    this->createAssets();
+    this->createCategories();
 }
 
-void AssetTableModel::createAssets() {
-    // Create 3 asset objects
-    Asset asset1("11th gen intel processor", 001, 209.99, "CPU", "");
-    Asset asset2("500 watt samsung power supply", 002, 79.99, "PSU", "Gold-rated, refurbished");
-    Asset asset3("Hyperx Quadcast S", 003, 129.99, "Mic", "");
+void CategoryTableModel::createCategories() {
+    // Create 3 Category objects
+    Category category1(1, "CPU");
+    Category category2(2, "PSU");
+    Category category3(3, "Mic");
 
-    // Add them to the assets vector
-    assets.push_back(asset1);
-    assets.push_back(asset2);
-    assets.push_back(asset3);
+    // Add them to the categories vector
+    categories.push_back(category1);
+    categories.push_back(category2);
+    categories.push_back(category3);
 }
 
-QVariant AssetTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant CategoryTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole) {
         // Set the column (Qt::Horizontal) headers
         if (orientation == Qt::Horizontal) {
             switch (section) {
             case 0:
-                return QString("Asset ID");
-            case 1:
                 return QString("Name");
-            case 2:
-                return QString("Cost");
-            case 3:
-                return QString("Category");
-            case 4:
-                return QString("Description");
             }
         }
     }
     return QVariant();
 }
 
-int AssetTableModel::rowCount(const QModelIndex &parent) const
+int CategoryTableModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         return 0;
     }
 
-    return static_cast<int>(assets.size()); // # of rows in table?
+    return static_cast<int>(categories.size()); // # of rows in table?
 }
 
-int AssetTableModel::columnCount(const QModelIndex &parent) const
+int CategoryTableModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         return 0;
     }
 
-    return 5; // Number of data members to display to user in table
+    return 1; // Number of data members to display to user in table
 }
 
-QVariant AssetTableModel::data(const QModelIndex &index, int role) const
+QVariant CategoryTableModel::data(const QModelIndex &index, int role) const
 {
     // Get the row and column numbers from the given index (QModelIndex)
     int row = index.row();
@@ -73,16 +65,8 @@ QVariant AssetTableModel::data(const QModelIndex &index, int role) const
     // Qt::DisplayRole -> what data do we display and in what columns?
     if (role == Qt::DisplayRole) {
         switch (col) {
-        case 0: // id column
-            return QString::fromStdString(std::to_string(assets[row].getID()));
-        case 1: // name column
-            return QString::fromStdString(assets[row].getName());
-        case 2: // cost column
-            return QString::fromStdString(std::to_string(assets[row].getCost()));
-        case 3: // category column
-            return QString::fromStdString(assets[row].getCategory());
-        case 4: // description column
-            return QString::fromStdString(assets[row].getDescription());
+        case 0: // name column
+            return QString::fromStdString(categories[row].getCategoryName());
         }
     }
 
@@ -119,7 +103,7 @@ QVariant AssetTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool AssetTableModel::setData(QModelIndex const& idx, QVariant const & /*value*/, int role) {
+bool CategoryTableModel::setData(QModelIndex const& idx, QVariant const & /*value*/, int role) {
     // Qt::EditRole: manages changes in the model
     if (Qt::EditRole == role) {
         // Get the top left and bottom right indices of the cells in our update range
@@ -138,12 +122,12 @@ bool AssetTableModel::setData(QModelIndex const& idx, QVariant const & /*value*/
 }
 
 /*
- * deletes the Asset at the given 0index from the user data
+ * deletes the Category at the given 0index from the user data
  */
-void AssetTableModel::removeAsset(int index)
+void CategoryTableModel::removeCategory(int index)
 {
-    // erases the Asset at position 'index' in the vector.
-    assets.erase(assets.begin() + index);
+    // erases the Category at position 'index' in the vector.
+    categories.erase(categories.begin() + index);
 
     /*
      * NOTE: vector::erase() uses an iterator as an argument.
@@ -156,9 +140,14 @@ void AssetTableModel::removeAsset(int index)
     this->setData(this->index(0,0), 0);
 }
 
-void AssetTableModel::addAsset(string name, double cost, string cat, string desc) {
-    Asset a(name, 4, cost, cat, desc);
-    assets.push_back(a);
+vector<Category> CategoryTableModel::getCategories() {
+    return categories;
+}
+
+void CategoryTableModel::addCategory(int i, string s) {
+    Category c(i, s);
+
+    categories.push_back(c);
 
     // VERY IMPORTANT - call setData to trigger the update of the model and view
     this->setData(this->index(0,0), 0);
